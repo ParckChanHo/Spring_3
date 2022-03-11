@@ -16,6 +16,12 @@
 	<script src="js/bootstrap.js"></script> <!-- 부트스트랩에서 제공해주는 js파일 삽입 -->
 </head>
 <body>
+	<%
+		String userID = null;
+		if(session.getAttribute("userID") != null){
+			userID = (String)session.getAttribute("userID");
+		}
+	%>
 	<nav class="navbar navbar-default"> <!-- 네비게이션 -->
 		<div class="navbar-header"> 	<!-- 네비게이션 상단 부분 -->
 			<!-- 네비게이션 상단 박스 영역 -->
@@ -49,8 +55,8 @@
 						aria-expanded="false">접속하기<span class="caret"></span></a>
 					<!-- 드랍다운 아이템 영역 -->	
 					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li><!-- active 현재 선택이 되었다는 의미이다. 1개의 홈페이지에 1개만 들어갈 수 있다. -->
-						<li><a href="join.jsp">회원가입</a></li>
+						<li><a href="login.do">로그인</a></li><!-- active 현재 선택이 되었다는 의미이다. 1개의 홈페이지에 1개만 들어갈 수 있다. -->
+						<li><a href="join.do">회원가입</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -65,7 +71,7 @@
 						aria-expanded="false">회원관리<span class="caret"></span></a>
 					<!-- 드랍다운 아이템 영역 -->	
 					<ul class="dropdown-menu">
-						<li><a href="logoutAction.jsp">로그아웃 </a></li>
+						<li><a href="logout.do">로그아웃</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -78,8 +84,8 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>웹 사이트 소개</h1>
-				<p>이 웹 사이트는 부트스트랩으로 만든 JSP 웹 사이트 입니다.</p>
-				<p><a class="btn btn-primary" href="#" role="button">자세히 알아보기</a></p>
+				<p>이 웹 사이트는 부트스트랩으로 만든 Spring 웹 사이트 입니다.</p>
+				<p><a class="btn btn-primary" href="#" role="button">깃허브 사이트</a></p>
 			</div>
 		</div>
 	</div>

@@ -101,7 +101,11 @@ public class UserController {
 		return "main.jsp";
 	}
 	
-	
+	@RequestMapping(value = "/main.do")
+	public String mainView(HttpSession session) {
+		System.out.println("메인 화면으로 이동...");
+		return "login.jsp";
+	}
 	
 	
 	
