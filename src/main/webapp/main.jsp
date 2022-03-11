@@ -16,6 +16,7 @@
 	<script src="js/bootstrap.js"></script> <!-- 부트스트랩에서 제공해주는 js파일 삽입 -->
 </head>
 <body>
+	<!-- 수정 완료 -->
 	<%
 		String userID = null;
 		if(session.getAttribute("userID") != null){
