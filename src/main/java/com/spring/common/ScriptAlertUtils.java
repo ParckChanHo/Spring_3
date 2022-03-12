@@ -75,4 +75,25 @@ public class ScriptAlertUtils {
 		script.println("</script>");
 	}
 	
+	// 로그인을 해라
+	public static void DoLogin(HttpServletResponse response) throws IOException {
+		init(response);
+		
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 하세요')");
+		script.println("location.href = 'login.jsp'");
+		script.println("</script>");
+	}
+	
+	// 글쓰기에 실패했습니다.
+	public static void FailWrite(HttpServletResponse response) throws IOException {
+		init(response);
+		
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('글쓰기에 실패하였습니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
 }

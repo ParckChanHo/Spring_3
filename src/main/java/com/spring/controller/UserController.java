@@ -32,7 +32,7 @@ public class UserController {
 		if(session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		if(userID != null) // 이미 로그인이 되어있는 경우
+		if(userID == null) // 이미 로그인이 되어있는 경우
 			ScriptAlertUtils.AlreadyLogin(response);
 		
 		int result = dao.login(dto);
@@ -106,7 +106,5 @@ public class UserController {
 		System.out.println("메인 화면으로 이동...");
 		return "login.jsp";
 	}
-	
-	
 	
 }
