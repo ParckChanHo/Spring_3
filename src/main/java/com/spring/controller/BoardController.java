@@ -32,7 +32,7 @@ public class BoardController {
 		
 		ArrayList<BoardDTO> list = dao.getList(int_pageNumber);
 		model.addAttribute("list",list);
-		model.addAttribute("pageNumber",pageNumber);
+		model.addAttribute("pageNumber",int_pageNumber);
 		model.addAttribute("nextPage",dao.nextPage(Integer.parseInt(pageNumber)+1));
 		
 		return "board.jsp";
@@ -40,7 +40,7 @@ public class BoardController {
 	
 	// 글쓰기
 	@RequestMapping(value = "/write.do", method = RequestMethod.GET)
-	public String loginView() {
+	public String writeView() {
 		System.out.println("글쓰기 화면으로 이동...");
 		return "write.jsp";
 	}
@@ -66,9 +66,28 @@ public class BoardController {
 				if(result == -1)
 					ScriptAlertUtils.FailWrite(response);
 				else
-					return "board.jsp";
+					return "board.do";
 			}	
 		}	
 		return null;
 	}
+	
+	// 상세보기
+	@RequestMapping("/view.do")
+	public String boardOneView(@RequestParam(value="bbsID") String bbsID,BoardDAO dao,BoardDTO dto,Model model) {
+		int int_bbsID = Integer.parseInt(bbsID);
+		dto.setBbsID(int_bbsID);
+		model.addAttribute("board",dao.getBoard(dto));
+		
+		return "view.jsp";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

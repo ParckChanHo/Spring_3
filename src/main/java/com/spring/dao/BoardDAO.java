@@ -66,7 +66,8 @@ public class BoardDAO {
 	
 	// bbsID가 게시물의 번호를 의미한다.
 		public ArrayList<BoardDTO> getList(int pageNumber){
-			String sql="select * from bbs where bbsID < ? and bbsAvailable = 1 order by bbsID desc limit 10";  
+			String sql="select * from bbs where bbsID < ? and bbsAvailable = 1 and ROWNUM >= 1 AND ROWNUM <= 10"
+					+ "order by bbsID desc";  
 			ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(sql);

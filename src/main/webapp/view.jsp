@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.spring.dto.BoardDTO" %> 
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css"><!-- href="css/bootstrap.min.css"도 동일하다!!-->
 	<link rel="stylesheet" href="css/custom.css">
 	
-	<title>게시판</title>
+	<title>글 상세보기</title>
 	<style type="text/css">
 		a, a:hover { 
 			color:#000000;
@@ -33,10 +32,7 @@
 			userID = (String)session.getAttribute("userID");
 		}
 		
-		int pageNumber = 1;
-		if(request.getAttribute("pageNumber")!= null){
-			pageNumber = (int)request.getAttribute("pageNumber");
-		}
+		BoardDTO bbs = (BoardDTO)request.getAttribute("board");
 	%>
 	<nav class="navbar navbar-default"> <!-- 네비게이션 -->
 		<div class="navbar-header"> 	<!-- 네비게이션 상단 부분 -->
@@ -98,44 +94,46 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+			<table class="table table-striped" style="text-align: center; border:1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="backgroud-color: #eeeeee; text-align:center;">번호</th>
-						<th style="backgroud-color: #eeeeee; text-align:center;">제목</th>
-						<th style="backgroud-color: #eeeeee; text-align:center;">작성자</th>
-						<th style="backgroud-color: #eeeeee; text-align:center;">작성일</th>
+						<th colspan="3" style="backgroud-color: #eeeeee; text-align:center;">게시판 글보기</th>	
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						ArrayList<BoardDTO> list = (ArrayList<BoardDTO>) request.getAttribute("list");
-						for(int i=0; i < list.size(); i++){
-					%>
 					<tr>
-						<td><%= list.get(i).getBbsID() %></td>
-						<td><a href="view.do?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle() %></a></td>
-						<td><%=list.get(i).getUserID() %></td>
-						<td><fmt:formatDate pattern = "yyyy-MM-dd" value="${list.get(i).getBbsDate()}"/></td>
+						<td style="width:20%;">글 제목</td>
+						<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 					</tr>
-					<%
-						}
-					%>
+					<tr>
+						<td>작성자</td>
+						<td colspan="2"><%=bbs.getUserID() %></td>
+					</tr>
+					<tr>
+						<td>작성일자</td>
+						<td colspan="2"><fmt:formatDate pattern = "yyyy-MM-dd" value="${list.get(i).getBbsDate()}"/></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="2" style="min-height:200px; text-align:left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+					</tr>
 				</tbody>
 			</table>
+
+			<a href="board.do" class="btn btn-primary">목록 </a>
+			<!-- userID = (String)session.getAttribute("userID");  로그인을 하였으면 아이디 값으로 세션이 새롭게 만들어졌음
+			따라서 만들어진 세션 값을 userID가 받는 것이다!!!-->
 			<%
-				if(pageNumber != 1){
+				if(userID != null && userID.equals(bbs.getUserID())){
 			%>
-			<a href="board.do?pageNumber=<%= pageNumber-1 %>" class="btn btn-success btn-arrow-left">이전</a>
+				<a href="update.do?bbsID=<%=bbs.getBbsID() %>" class="btn btn-primary">수정</a>
+				<a href="delete.do?bbsID=<%=bbs.getBbsID() %>" class="btn btn-primary" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
 			<%
-				} if((boolean)request.getAttribute("nextPage")){
-			%>
-			<a href="board.do?pageNumber=<%= pageNumber+1 %>" class="btn btn-success btn-arrow-right">다음</a>
-			<%		
 				}
 			%>
-			<a href="write.do" class="btn btn-primary pull-right">글쓰기</a>
-		</div>
+
+			<input type="button" class="btn btn-primary pull-right" value="글쓰기" onclick="location.href='write.jsp?userID=<%=userID%>'"/>
+		</div>	
 	</div>
 </body> 
 </html>
