@@ -16,7 +16,11 @@
 	
 	<title>°Ô½ÃÆÇ</title>
 	<style type="text/css">
-		a, a:hover { 
+		a { 
+			color:#000000;
+			text-decoration: none;
+		}
+		a:hover,a:visited,a:active{
 			color:#000000;
 			text-decoration: none;
 		}

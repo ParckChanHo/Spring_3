@@ -11,12 +11,6 @@
 	<link rel="stylesheet" href="css/custom.css">
 	
 	<title>게시판</title>
-	<style type="text/css">
-		a, a:hover { 
-			color:#000000;
-			text-decoration: none;
-		}
-	</style>
  	<!-- a>>> a 태그를 전체 선택한다. a:hover는 사용자의 커서(마우스 포인터)가 요소 위에 올라가 있으면 선택된다.-->
 	<!-- 부트스트랩 참조 영역 -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script><!-- jquery 삽입 -->

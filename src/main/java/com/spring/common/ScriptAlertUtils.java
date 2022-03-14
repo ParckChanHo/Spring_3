@@ -96,4 +96,37 @@ public class ScriptAlertUtils {
 		script.println("history.back()");
 		script.println("</script>");
 	}
+	
+	// 권한이 없다.
+	public static void NoAuthority(HttpServletResponse response) throws IOException {
+		init(response);
+		
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('권한이 없습니다.')");
+		script.println("location.href = 'board.do'");
+		script.println("</script>");
+	}
+	
+	// 글 수정에 실패했습니다.
+	public static void NoUpdate(HttpServletResponse response) throws IOException {
+		init(response);
+		
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('글 수정에 실패하였습니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	
+	// 글 삭제에 실패했습니다.
+	public static void NoDelete(HttpServletResponse response) throws IOException {
+		init(response);
+		
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('글 삭제에 실패하였습니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
 }

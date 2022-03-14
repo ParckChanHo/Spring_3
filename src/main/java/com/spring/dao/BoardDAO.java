@@ -64,95 +64,95 @@ public class BoardDAO {
 		return -1; //데이터베이스 오류
 	}
 	
-	// bbsID가 게시물의 번호를 의미한다.
-		public ArrayList<BoardDTO> getList(int pageNumber){
-			String sql="select * from bbs where bbsID < ? and bbsAvailable = 1 and ROWNUM >= 1 AND ROWNUM <= 10"
-					+ "order by bbsID desc";  
-			ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, getNext() - (pageNumber - 1)*10);
-				rs = pstmt.executeQuery();
-				while(rs.next()) {
-					BoardDTO bbs = new BoardDTO(); //1개의 게시물들을 모두 새로운 board객체에다가 저장을 
-					bbs.setBbsID(rs.getInt(1));
-					bbs.setBbsTitle(rs.getString(2));
-					bbs.setUserID(rs.getString(3));
-					bbs.setBbsDate(rs.getDate(4));
-					bbs.setBbsContent(rs.getString(5));
-					bbs.setBbsAvailable(rs.getInt(6));
-					list.add(bbs);
-				}
+// bbsID가 게시물의 번호를 의미한다.
+	public ArrayList<BoardDTO> getList(int pageNumber){
+		String sql="select * from bbs where bbsID < ? and bbsAvailable = 1 and ROWNUM >= 1 AND ROWNUM <= 10"
+				+ "order by bbsID desc";  
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, getNext() - (pageNumber - 1)*10);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardDTO bbs = new BoardDTO(); //1개의 게시물들을 모두 새로운 board객체에다가 저장을 
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getDate(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				list.add(bbs);
 			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			return list;
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
-		public boolean nextPage(int pageNumber) {
-			String sql="select * from bbs where bbsID < ? and bbsAvailable = 1";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, getNext() - (pageNumber - 1)*10);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					return true;
-				}
+	public boolean nextPage(int pageNumber) {
+		String sql="select * from bbs where bbsID < ? and bbsAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, getNext() - (pageNumber - 1)*10);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return true;
 			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			return false;
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
-		public BoardDTO getBoard(BoardDTO dto) { // bbsID에 해당하는 게시물을 반환한다.
-			String sql="select * from bbs where bbsID = ?";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, dto.getBbsID());//인자로 전달받은 bbsID의 값에 해당하는 게시물을 선택한다!!!
-				rs = pstmt.executeQuery();
-				if(rs.next()) {// 해당되는 게시물이 있으면
-					BoardDTO bbs = new BoardDTO(); //1개의 게시물들을 모두 새로운 board객체에다가 저장을 
-					bbs.setBbsID(rs.getInt(1));
-					bbs.setBbsTitle(rs.getString(2));
-					bbs.setUserID(rs.getString(3));
-					bbs.setBbsDate(rs.getDate(4));
-					bbs.setBbsContent(rs.getString(5));
-					bbs.setBbsAvailable(rs.getInt(6));
-					return bbs;
-				}
+	public BoardDTO getBoard(BoardDTO dto) { // bbsID에 해당하는 게시물을 반환한다.
+		String sql="select * from bbs where bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getBbsID());//인자로 전달받은 bbsID의 값에 해당하는 게시물을 선택한다!!!
+			rs = pstmt.executeQuery();
+			if(rs.next()) {// 해당되는 게시물이 있으면
+				BoardDTO bbs = new BoardDTO(); //1개의 게시물들을 모두 새로운 board객체에다가 저장을 
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getDate(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				return bbs;
 			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-		public int update(BoardDTO dto) {
-			String SQL = "UPDATE bbs SET bbsTitle=?, bbsContent=? WHERE bbsID = ?";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, dto.getBbsTitle());
-				pstmt.setString(2, dto.getBbsContent());
-				pstmt.setInt(3, dto.getBbsID());
-				return pstmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return -1; 
+	public int update(BoardDTO dto) {
+		String SQL = "UPDATE bbs SET bbsTitle=?, bbsContent=? WHERE bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, dto.getBbsTitle());
+			pstmt.setString(2, dto.getBbsContent());
+			pstmt.setInt(3, dto.getBbsID());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return -1; 
+	}
 
-		public int delete(BoardDTO dto) {
-			String SQL = "UPDATE bbs SET bbsAvailable = 0 WHERE bbsID = ?";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setInt(1, dto.getBbsID());
-				return pstmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return -1; 
+	public int delete(BoardDTO dto) {
+		String SQL = "UPDATE bbs SET bbsAvailable = 0 WHERE bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, dto.getBbsID());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return -1; 
+	}
 		
 }

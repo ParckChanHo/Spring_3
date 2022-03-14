@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ page import="com.spring.dto.BoardDTO" %> 
-<%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,11 @@
 	
 	<title>글 상세보기</title>
 	<style type="text/css">
-		a, a:hover { 
+		a { 
+			color:#000000;
+			text-decoration: none;
+		}
+		a:hover,a:visited,a:active{
 			color:#000000;
 			text-decoration: none;
 		}
@@ -111,7 +116,8 @@
 					</tr>
 					<tr>
 						<td>작성일자</td>
-						<td colspan="2"><fmt:formatDate pattern = "yyyy-MM-dd" value="${list.get(i).getBbsDate()}"/></td>
+						<c:set var="date" value="<%=bbs.getBbsDate() %>"></c:set>
+						<td colspan="2"><fmt:formatDate value="${date}"  pattern = "yyyy-MM-dd"/> </td>
 					</tr>
 					<tr>
 						<td>내용</td>
@@ -132,7 +138,7 @@
 				}
 			%>
 
-			<input type="button" class="btn btn-primary pull-right" value="글쓰기" onclick="location.href='write.jsp?userID=<%=userID%>'"/>
+			<input type="button" class="btn btn-primary pull-right" value="글쓰기" onclick="location.href='write.do'"/>
 		</div>	
 	</div>
 </body> 

@@ -86,8 +86,53 @@
 			<div class="container">
 				<h1>웹 사이트 소개</h1>
 				<p>이 웹 사이트는 부트스트랩으로 만든 Spring 웹 사이트 입니다.</p>
-				<p><a class="btn btn-primary" href="#" role="button">깃허브 사이트</a></p>
+				<p><a class="btn btn-primary" href="https://github.com/ParckChanHo/Spring_3" role="button">깃허브 사이트</a></p>
 			</div>
 		</div>
 	</div>
+
+	<div class="container">
+		<div id="carousel-example-generic" class="carousel slide"
+			data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" data-slide-to="0"
+					class="active"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="1.png" alt="사진 출력에 오류가 생겼습니다.">
+					<div class="carousel-caption">
+						<h3>1 번째 사진입니다.</h3>
+					</div>
+				</div>
+				<div class="item">
+					<img src="2.png" alt="사진 출력에 오류가 생겼습니다.">
+					<div class="carousel-caption">
+						<h3>2 번째 사진입니다.</h3>
+					</div>
+				</div>
+				<div class="item">
+					<img src="3.png" alt="사진 출력에 오류가 생겼습니다.">
+					<div class="carousel-caption">
+						<h3>3 번째 사진입니다.</h3>
+					</div>
+				</div>
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic"
+				role="button" data-slide="prev"> <span
+				class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#carousel-example-generic"
+				role="button" data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+
 </body> 

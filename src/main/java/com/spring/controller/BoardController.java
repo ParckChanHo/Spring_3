@@ -82,12 +82,88 @@ public class BoardController {
 		return "view.jsp";
 	}
 	
+	// 수정하기
+	@RequestMapping(value = "/update.do", method = RequestMethod.GET)
+	public String updateView(Model model,@RequestParam(value="bbsID") String bbsID,BoardDAO dao,BoardDTO dto,HttpSession session,HttpServletResponse response) throws IOException {
+		System.out.println("수정하기 화면으로 이동...");
+		String userID = null;
+		if(session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+		if(userID == null) { // 로그인이 되어있지 않음.
+			ScriptAlertUtils.DoLogin(response);
+		}
+		
+		dto.setBbsID(Integer.parseInt(bbsID));
+		BoardDTO bbs = dao.getBoard(dto); //클릭한 게시물 제목에 해당하는 게시물 객체를 반환한다.!!
+		if(!userID.equals(bbs.getUserID())){
+			ScriptAlertUtils.NoAuthority(response);
+		}
+		
+		model.addAttribute("board",bbs);
+		
+		return "update.jsp";
+	}
+
+	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
+	public String update(BoardDAO dao,BoardDTO dto,HttpSession session,HttpServletResponse response) throws IOException {
+		String userID = null;
+		if(session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+		if(userID == null) { // 로그인이 되어있지 않음.
+			ScriptAlertUtils.DoLogin(response);
+		}
+		
+		BoardDTO bbs = dao.getBoard(dto); //클릭한 게시물 제목에 해당하는 게시물 객체를 반환한다.!!
+		if(!userID.equals(bbs.getUserID())){ // 로그인한 사람이 쓴 게시물이라면 true를 반환한다!!!
+			ScriptAlertUtils.NoAuthority(response);
+		}
+		else { // 수정
+			int result = dao.update(dto);
+			
+			if(result == -1){
+				ScriptAlertUtils.NoUpdate(response);
+			}
+			else{
+				return "board.do";
+			}
+		}
+		
+		return null;
+	}
 	
-	
-	
-	
-	
-	
-	
+	// 삭제하기
+	@RequestMapping("/delete.do")
+	public String boardDelete(@RequestParam(value="bbsID") String bbsID,BoardDAO dao,BoardDTO dto,HttpSession session,HttpServletResponse response) throws IOException {
+		String userID = null;
+		if(session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+		if(userID == null) { // 로그인이 되어있지 않음.
+			ScriptAlertUtils.DoLogin(response);
+		}
+		
+		dto.setBbsID(Integer.parseInt(bbsID));
+		BoardDTO bbs = dao.getBoard(dto); //클릭한 게시물 제목에 해당하는 게시물 객체를 반환한다.!!
+		if(!userID.equals(bbs.getUserID())){
+			ScriptAlertUtils.NoAuthority(response);
+		}
+		else { // 삭제
+			int result = dao.delete(dto);
+			
+			if(result == -1){
+				ScriptAlertUtils.NoDelete(response);
+			}
+			else{
+				return "board.do";
+			}
+		}
+		
+		return null;
+	}
 	
 }
